@@ -1,7 +1,7 @@
-XXX
+configure_net-snmp_agent
 =========
 
-YYY
+Configure and start the net-snmp agent with just a read-only user
 
 Requirements
 ------------
@@ -23,7 +23,7 @@ Example Playbook
 
     - hosts: servers
       roles:
-         - { role: johanneskastl.XXX}
+         - { role: johanneskastl.configure_net-snmp_agent}
 
 License
 -------
