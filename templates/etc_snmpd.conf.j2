@@ -1,0 +1,26 @@
+# {{ ansible_managed }}
+
+#
+# System information
+#
+{% if snmp_syslocation is defined %}
+sysLocation {{ snmp_syslocation }}
+{% else %}
+sysLocation "Unknown location"
+{% endif %}
+{% if snmp_syscontact is defined %}
+sysContact {{ snmp_syscontact}}
+{% else %}
+sysContact ""
+{% endif %}
+{% if snmp_sysname is defined %}
+sysName {{ snmp_sysname }}
+{% endif %}
+
+#
+# system view (default from net-snmp package)
+#
+view    systemview    included   .1.3.6.1.2.1.1
+view    systemview    included   .1.3.6.1.2.1.25.1.1
+
+rouser {{ snmp_user }} authPriv
