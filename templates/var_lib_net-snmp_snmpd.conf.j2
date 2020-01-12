@@ -1,0 +1,4 @@
+#
+# Create read-only user
+#
+createUser {{ snmp_user }} {{ snmp_authentication_encryption_method }} {{ snmp_password }} {{ snmp_privacy_encryption_method }} {{ snmp_password }}
