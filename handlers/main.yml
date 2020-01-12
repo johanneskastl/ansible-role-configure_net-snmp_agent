@@ -1,0 +1,8 @@
+---
+# configure_net-snmp_agent/handlers/main.yml
+
+- name: "Restart snmpd service"
+  service:
+    name: "{{ snmpd_service_name }}"
+    state: "restarted"
+    enabled: true
