@@ -38,7 +38,7 @@
 
 - block:
     - name: "Check for usmUser line in /var/lib/snmp/snmpd.conf"
-      shell: 'grep ^usmUser /var/lib/snmp/snmpd.conf'
+      command: 'grep ^usmUser /var/lib/snmp/snmpd.conf'
       check_mode: "false"
       changed_when: false
       failed_when: false
