@@ -46,7 +46,7 @@
 
     - debug:
         var: grep_usmUser_in_snmpd
-        
+
     - name: "Stop service snmpd on Debian"
       service:
        name: "snmpd"
