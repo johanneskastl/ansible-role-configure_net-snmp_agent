@@ -56,7 +56,8 @@
     - name: "Add createUser line to /var/lib/snmp/snmpd.conf"
       lineinfile:
         path: "/var/lib/snmp/snmpd.conf"
-        line: "createUser {{ snmp_user }} {{ snmp_authentication_encryption_method }} {{ snmp_password }} {{ snmp_privacy_encryption_method }} {{ snmp_password }}"
+        line: >
+          "createUser {{ snmp_user }} {{ snmp_authentication_encryption_method }} {{ snmp_password }} {{ snmp_privacy_encryption_method }} {{ snmp_password }}"
         insertafter: "^setserialno"
       when: 'grep_usmUser_in_snmpd.rc == 1'
       notify:
