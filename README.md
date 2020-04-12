@@ -1,3 +1,5 @@
+![Ansible Lint](https://github.com/johanneskastl/ansible-role-configure_net-snmp_agent/workflows/Ansible%20Lint/badge.svg)
+
 configure_net-snmp_agent
 =========
 

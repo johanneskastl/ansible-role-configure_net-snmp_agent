@@ -38,7 +38,7 @@
 
 - block:
     - name: "Check for usmUser line in /var/lib/snmp/snmpd.conf"
-      shell: 'grep ^usmUser /var/lib/snmp/snmpd.conf'
+      command: 'grep ^usmUser /var/lib/snmp/snmpd.conf'
       check_mode: "false"
       changed_when: false
       failed_when: false
@@ -46,7 +46,7 @@
 
     - debug:
         var: grep_usmUser_in_snmpd
-        
+
     - name: "Stop service snmpd on Debian"
       service:
        name: "snmpd"
@@ -56,7 +56,8 @@
     - name: "Add createUser line to /var/lib/snmp/snmpd.conf"
       lineinfile:
         path: "/var/lib/snmp/snmpd.conf"
-        line: "createUser {{ snmp_user }} {{ snmp_authentication_encryption_method }} {{ snmp_password }} {{ snmp_privacy_encryption_method }} {{ snmp_password }}"
+        line: >
+          "createUser {{ snmp_user }} {{ snmp_authentication_encryption_method }} {{ snmp_password }} {{ snmp_privacy_encryption_method }} {{ snmp_password }}"
         insertafter: "^setserialno"
       when: 'grep_usmUser_in_snmpd.rc == 1'
       notify:
