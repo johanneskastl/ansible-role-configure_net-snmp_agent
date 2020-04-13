@@ -13,7 +13,7 @@ None.
 Role Variables
 --------------
 
-None.
+`snmp_password`: Password that should be set for the snmp user (for both authentication and privacy passphrase).
 
 Dependencies
 ------------
@@ -25,7 +25,7 @@ Example Playbook
 
     - hosts: servers
       roles:
-         - { role: 'johanneskastl.configure_net-snmp_agent' }
+         - { role: 'johanneskastl.configure_net-snmp_agent', snmp_password: 'IamVeryVeryInsecure' }
 
 License
 -------
