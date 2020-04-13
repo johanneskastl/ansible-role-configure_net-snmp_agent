@@ -25,7 +25,7 @@ Example Playbook
 
     - hosts: servers
       roles:
-         - { role: johanneskastl.configure_net-snmp_agent}
+         - { role: 'johanneskastl.configure_net-snmp_agent' }
 
 License
 -------
