@@ -10,24 +10,24 @@ galaxy_info:
   min_ansible_version: 2.4
 
   platforms:
-  - name: SUSE
-    versions:
-    - all
-  - name: openSUSE Leap
-    versions:
-    - all
-  - name: RedHat
-    versions:
-    - all
-  - name: CentOS
-    versions:
-    - all
-  - name: Fedora
-    versions:
-    - all
-  - name: Debian
-    versions:
-    - all
+    - name: SUSE
+      versions:
+        - all
+    - name: openSUSE Leap
+      versions:
+        - all
+    - name: RedHat
+      versions:
+        - all
+    - name: CentOS
+      versions:
+        - all
+    - name: Fedora
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
 
   galaxy_tags: []
 
