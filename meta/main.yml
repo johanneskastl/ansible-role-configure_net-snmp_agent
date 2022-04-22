@@ -1,5 +1,6 @@
 galaxy_info:
   role_name: 'configure_net-snmp_agent'
+  namespace: 'johanneskastl'
   author: 'Johannes Kastl'
   description: 'Configure and start the net-snmp agent with just a read-only user'
   company: 'B1 Systems GmbH'
