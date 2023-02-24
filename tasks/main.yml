@@ -32,7 +32,7 @@
     owner: 'root'
     group: 'root'
     mode: '0600'
-    force: no
+    force: false
   when:
     - 'ansible_os_family != "Debian"'
   notify:
@@ -44,7 +44,7 @@
   block:
     - name: 'Check for usmUser line in /var/lib/snmp/snmpd.conf'
       ansible.builtin.command: 'grep ^usmUser /var/lib/snmp/snmpd.conf'
-      check_mode: 'false'
+      check_mode: false
       changed_when: false
       failed_when: false
       register: grep_usmuser_in_snmpd
