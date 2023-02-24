@@ -1,8 +1,8 @@
 ---
 # configure_net-snmp_agent/handlers/main.yml
 
-- name: "Restart snmpd service"
+- name: 'Restart snmpd service'
   ansible.builtin.service:
     name: "{{ snmpd_service_name }}"
-    state: "restarted"
+    state: 'restarted'
     enabled: true
