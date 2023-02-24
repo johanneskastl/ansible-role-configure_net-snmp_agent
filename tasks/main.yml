@@ -25,7 +25,7 @@
   notify:
     - 'Restart snmpd service'
 
-- name: "Create {{ path_var_lib_snmp }}/snmpd.conf from template"
+- name: 'Create snmpd.conf from template'
   ansible.builtin.template:
     src: 'var_lib_net-snmp_snmpd.conf.j2'
     dest: "{{ path_var_lib_snmp }}/snmpd.conf"
