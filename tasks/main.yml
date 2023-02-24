@@ -36,7 +36,8 @@
   notify:
     - "Restart snmpd service"
 
-- block:
+- name: 'Block for Debian'
+  block:
     - name: "Check for usmUser line in /var/lib/snmp/snmpd.conf"
       ansible.builtin.command: 'grep ^usmUser /var/lib/snmp/snmpd.conf'
       check_mode: "false"
