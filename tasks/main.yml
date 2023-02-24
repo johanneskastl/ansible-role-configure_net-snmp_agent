@@ -55,8 +55,8 @@
 
     - name: "Stop service snmpd on Debian"
       ansible.builtin.service:
-       name: "snmpd"
-       state: "stopped"
+        name: "snmpd"
+        state: "stopped"
       when:
         - 'grep_usmuser_in_snmpd.rc == 1'
 
