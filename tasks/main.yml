@@ -44,7 +44,8 @@
       failed_when: false
       register: grep_usmUser_in_snmpd
 
-    - ansible.builtin.debug:
+    - name: 'Check variable grep_usmUser_in_snmpd'
+      ansible.builtin.debug:
         var: grep_usmUser_in_snmpd
 
     - name: "Stop service snmpd on Debian"
