@@ -8,4 +8,3 @@ path_var_lib_snmp: "/var/lib/net-snmp"
 snmpd_service_name: "snmpd"
 snmp_authentication_encryption_method: "SHA"
 snmp_privacy_encryption_method: "AES"
-
