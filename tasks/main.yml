@@ -37,6 +37,7 @@
     - "Restart snmpd service"
 
 - name: 'Block for Debian'
+  when: 'ansible_os_family == "Debian"'
   block:
     - name: "Check for usmUser line in /var/lib/snmp/snmpd.conf"
       ansible.builtin.command: 'grep ^usmUser /var/lib/snmp/snmpd.conf'
@@ -64,7 +65,6 @@
       when: 'grep_usmUser_in_snmpd.rc == 1'
       notify:
         - "Restart snmpd service"
-  when: 'ansible_os_family == "Debian"'
 
 - name: "Make sure snmpd.service is started and enabled"
   ansible.builtin.service:
