@@ -1,50 +1,50 @@
 ---
 # configure_net-snmp_agent/tasks/main.yml
 
-- name: "Create directory /var/lib/net-snmp/ on RedHat, CentOS, Fedora & Co"
+- name: 'Create directory /var/lib/net-snmp/ on RedHat, CentOS, Fedora & Co'
   ansible.builtin.file:
-    path: "/var/lib/net-snmp"
-    state: "directory"
-    owner: "root"
-    group: "root"
-    mode: "0755"
-    seuser: "system_u"
-    serole: "object_r"
-    setype: "snmpd_var_lib_t"
-    selevel: "s0"
+    path: '/var/lib/net-snmp'
+    state: 'directory'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+    seuser: 'system_u'
+    serole: 'object_r'
+    setype: 'snmpd_var_lib_t'
+    selevel: 's0'
   when:
     - 'ansible_os_family == "RedHat"'
 
-- name: "Create /etc/snmp/snmpd.conf from template"
+- name: 'Create /etc/snmp/snmpd.conf from template'
   ansible.builtin.template:
-    src: "etc_snmpd.conf.j2"
-    dest: "/etc/snmp/snmpd.conf"
-    owner: "root"
-    group: "root"
-    mode: "0600"
+    src: 'etc_snmpd.conf.j2'
+    dest: '/etc/snmp/snmpd.conf'
+    owner: 'root'
+    group: 'root'
+    mode: '0600'
   notify:
-    - "Restart snmpd service"
+    - 'Restart snmpd service'
 
 - name: "Create {{ path_var_lib_snmp }}/snmpd.conf from template"
   ansible.builtin.template:
-    src: "var_lib_net-snmp_snmpd.conf.j2"
+    src: 'var_lib_net-snmp_snmpd.conf.j2'
     dest: "{{ path_var_lib_snmp }}/snmpd.conf"
-    owner: "root"
-    group: "root"
-    mode: "0600"
+    owner: 'root'
+    group: 'root'
+    mode: '0600'
     force: no
   when:
     - 'ansible_os_family != "Debian"'
   notify:
-    - "Restart snmpd service"
+    - 'Restart snmpd service'
 
 - name: 'Block for Debian'
   when:
     - 'ansible_os_family == "Debian"'
   block:
-    - name: "Check for usmUser line in /var/lib/snmp/snmpd.conf"
+    - name: 'Check for usmUser line in /var/lib/snmp/snmpd.conf'
       ansible.builtin.command: 'grep ^usmUser /var/lib/snmp/snmpd.conf'
-      check_mode: "false"
+      check_mode: 'false'
       changed_when: false
       failed_when: false
       register: grep_usmuser_in_snmpd
@@ -53,26 +53,26 @@
       ansible.builtin.debug:
         var: grep_usmuser_in_snmpd
 
-    - name: "Stop service snmpd on Debian"
+    - name: 'Stop service snmpd on Debian'
       ansible.builtin.service:
-        name: "snmpd"
-        state: "stopped"
+        name: 'snmpd'
+        state: 'stopped'
       when:
         - 'grep_usmuser_in_snmpd.rc == 1'
 
-    - name: "Add createUser line to /var/lib/snmp/snmpd.conf"
+    - name: 'Add createUser line to /var/lib/snmp/snmpd.conf'
       ansible.builtin.lineinfile:
-        path: "/var/lib/snmp/snmpd.conf"
+        path: '/var/lib/snmp/snmpd.conf'
         line: >
           "createUser {{ snmp_user }} {{ snmp_authentication_encryption_method }} {{ snmp_password }} {{ snmp_privacy_encryption_method }} {{ snmp_password }}"
-        insertafter: "^setserialno"
+        insertafter: '^setserialno'
       when:
         - 'grep_usmuser_in_snmpd.rc == 1'
       notify:
-        - "Restart snmpd service"
+        - 'Restart snmpd service'
 
-- name: "Make sure snmpd.service is started and enabled"
+- name: 'Make sure snmpd.service is started and enabled'
   ansible.builtin.service:
     name: "{{ snmpd_service_name }}"
-    state: "started"
+    state: 'started'
     enabled: true
