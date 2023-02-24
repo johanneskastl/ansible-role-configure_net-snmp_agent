@@ -2,7 +2,7 @@
 # configure_net-snmp_agent/tasks/main.yml
 
 - name: "Create directory /var/lib/net-snmp/ on RedHat, CentOS, Fedora & Co"
-  file:
+  ansible.builtin.file:
     path: "/var/lib/net-snmp"
     state: "directory"
     owner: "root"
@@ -15,7 +15,7 @@
   when: 'ansible_os_family == "RedHat"'
 
 - name: "Create /etc/snmp/snmpd.conf from template"
-  template:
+  ansible.builtin.template:
     src: "etc_snmpd.conf.j2"
     dest: "/etc/snmp/snmpd.conf"
     owner: "root"
@@ -25,7 +25,7 @@
     - "Restart snmpd service"
 
 - name: "Create {{ path_var_lib_snmp }}/snmpd.conf from template"
-  template:
+  ansible.builtin.template:
     src: "var_lib_net-snmp_snmpd.conf.j2"
     dest: "{{ path_var_lib_snmp }}/snmpd.conf"
     owner: "root"
@@ -38,23 +38,23 @@
 
 - block:
     - name: "Check for usmUser line in /var/lib/snmp/snmpd.conf"
-      command: 'grep ^usmUser /var/lib/snmp/snmpd.conf'
+      ansible.builtin.command: 'grep ^usmUser /var/lib/snmp/snmpd.conf'
       check_mode: "false"
       changed_when: false
       failed_when: false
       register: grep_usmUser_in_snmpd
 
-    - debug:
+    - ansible.builtin.debug:
         var: grep_usmUser_in_snmpd
 
     - name: "Stop service snmpd on Debian"
-      service:
+      ansible.builtin.service:
        name: "snmpd"
        state: "stopped"
       when: 'grep_usmUser_in_snmpd.rc == 1'
 
     - name: "Add createUser line to /var/lib/snmp/snmpd.conf"
-      lineinfile:
+      ansible.builtin.lineinfile:
         path: "/var/lib/snmp/snmpd.conf"
         line: >
           "createUser {{ snmp_user }} {{ snmp_authentication_encryption_method }} {{ snmp_password }} {{ snmp_privacy_encryption_method }} {{ snmp_password }}"
@@ -65,7 +65,7 @@
   when: 'ansible_os_family == "Debian"'
 
 - name: "Make sure snmpd.service is started and enabled"
-  service:
+  ansible.builtin.service:
     name: "{{ snmpd_service_name }}"
     state: "started"
     enabled: true
