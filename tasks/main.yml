@@ -47,18 +47,18 @@
       check_mode: "false"
       changed_when: false
       failed_when: false
-      register: grep_usmUser_in_snmpd
+      register: grep_usmuser_in_snmpd
 
-    - name: 'Check variable grep_usmUser_in_snmpd'
+    - name: 'Check variable grep_usmuser_in_snmpd'
       ansible.builtin.debug:
-        var: grep_usmUser_in_snmpd
+        var: grep_usmuser_in_snmpd
 
     - name: "Stop service snmpd on Debian"
       ansible.builtin.service:
        name: "snmpd"
        state: "stopped"
       when:
-        - 'grep_usmUser_in_snmpd.rc == 1'
+        - 'grep_usmuser_in_snmpd.rc == 1'
 
     - name: "Add createUser line to /var/lib/snmp/snmpd.conf"
       ansible.builtin.lineinfile:
@@ -67,7 +67,7 @@
           "createUser {{ snmp_user }} {{ snmp_authentication_encryption_method }} {{ snmp_password }} {{ snmp_privacy_encryption_method }} {{ snmp_password }}"
         insertafter: "^setserialno"
       when:
-        - 'grep_usmUser_in_snmpd.rc == 1'
+        - 'grep_usmuser_in_snmpd.rc == 1'
       notify:
         - "Restart snmpd service"
 
